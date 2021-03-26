@@ -5,12 +5,12 @@ from django.views import View
 
 class MainView(View):
     def get(self, request):
-        return HttpResponse('Главная страница')
+        return render(request, 'vacancies/index.html')
 
 
 class ListVacanciesView(View):
     def get(self, request):
-        return HttpResponse('Список вакансий')
+        return render(request, 'vacancies/vacancies.html')
 
 
 class SpecVacanciesView(View):
@@ -20,9 +20,9 @@ class SpecVacanciesView(View):
 
 class CardCompanyView(View):
     def get(self, request):
-        return HttpResponse('Карточка компании')
+        return render(request, 'vacancies/company.html')
 
 
 class Vacancy(View):
     def get(self, request):
-        return HttpResponse('Вакансия')
+        return render(request, 'vacancies/vacancy.html')
