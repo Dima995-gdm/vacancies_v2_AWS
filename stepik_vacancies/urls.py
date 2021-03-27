@@ -23,6 +23,6 @@ urlpatterns = [
     path('vacancies/', views.ListVacanciesView.as_view(), name='list_all_vacancies'),
     path('vacancies/cat/frontend/', views.SpecVacanciesView.as_view(), name='vacancies_on_specialization'),
     path('companies/345/', views.CardCompanyView.as_view(), name='card_company'),
-    path('vacancies/22', views.Vacancy.as_view(), name='vacancy'),
+    path('vacancies/22', views.ThisVacancy.as_view(), name='vacancy'),
 
 ]

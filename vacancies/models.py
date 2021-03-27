@@ -4,7 +4,7 @@ from django.db import models
 class Vacancy(models.Model):
     title = models.CharField(max_length=50)
     specialty = models.ForeignKey('Specialty', related_name="vacancies", on_delete=models.CASCADE)
-    company = models.ForeignKey('Company', related_name="vacancies", on_delete=models.CASCADE, null=True)
+    company = models.ForeignKey('Company', related_name="vacancies", on_delete=models.CASCADE)
     skills = models.CharField(max_length=200)
     description = models.TextField()
     salary_min = models.IntegerField()
