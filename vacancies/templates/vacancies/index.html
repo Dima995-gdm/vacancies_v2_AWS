@@ -1,8 +1,6 @@
 {% extends 'vacancies/base.html' %}
 
-
 {% block title %}Джуманджи{% endblock %}
-
 
 {% block content %}
   <main class="container mt-3">
@@ -24,24 +22,21 @@
             <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Django</a>
             <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">Парсинг</a>
             <a href="#" class="text-dark border-bottom border-dark m-1 text-decoration-none">ML</a>
-
           </p>
         </div>
       </div>
     </section>
 
     <section class="mt-5 pt-3">
-
       <h2 class="h2 font-weight-normal text-center mb-5">Вакансии по рубрикам</h2>
       <div class="row mb-0">
     {% for specialty in specialties %}
         <div class="col-6 col-md-6 col-lg-3">
-
           <div class="card pt-4 text-center mb-4">
             <img class="mx-auto d-block" src="{{ specialty.picture }}" width="80" height="80" alt="">
             <div class="card-body">
               <p class="card-text mb-2">{{ specialty.title }}</p>
-              <p class="card-text"><a href="#">5 вакансий</a></p>
+              <p class="card-text"><a href="{% url 'vacancies_on_specialization' specialty.code %}">{{ specialty.vacancies.count }} вакансий</a></p>
             </div>
           </div>
         </div>
@@ -49,18 +44,17 @@
       </div>
     </section>
 
-
     <section class="my-5 pt-3">
       <h2 class="h2 font-weight-normal text-center mb-5">Нам доверяют лучшие компании</h2>
       <div class="row mb-0">
     {% for company in companies %}
         <div class="col-6 col-md-6 col-lg-3">
           <div class="card pt-4 text-center mb-4">
-            <a href="#" style="max-width: 150px;" class="mx-auto d-block">
+            <a href="{% url 'card_company' company.id %}" style="max-width: 150px;" class="mx-auto d-block">
               <img class="mx-auto d-block mw-100" src="{{ company.logo }}" alt="">
             </a>
             <div class="card-body">{{ company.name }}
-              <p class="card-text"><a href="#">5 вакансий</a></p>
+              <p class="card-text"><a href="{% url 'card_company' company.id %}">{{ company.vacancies.count }} вакансий</a></p>
             </div>
           </div>
         </div>

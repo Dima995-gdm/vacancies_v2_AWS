@@ -33,5 +33,3 @@ if __name__ == '__main__':
             salary_max=data_jobs.get('salary_to'),
             published_at=data_jobs.get('posted'),
         )
-
-
