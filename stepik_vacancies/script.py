@@ -1,8 +1,8 @@
 import os
 import django
 
-from stepik_vacancies.data import jobs, companies, specialties
-from vacancies.models import Vacancy, Company, Specialty
+from stepik_vacancies.data import companies, jobs, specialties
+from vacancies.models import Company, Specialty, Vacancy
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'stepik_vacancies.settings'
 django.setup()
