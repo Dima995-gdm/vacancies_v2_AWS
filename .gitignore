@@ -56,7 +56,7 @@ cover/
 # Translations
 *.mo
 *.pot
-
+.gitignore
 # Django stuff:
 *.log
 local_settings.py
