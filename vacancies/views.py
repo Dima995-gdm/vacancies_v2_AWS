@@ -10,7 +10,7 @@ class MainView(View):
         companies = Company.objects.all()
         context = {
             'specialties': specialties,
-            'companies': companies
+            'companies': companies,
         }
         return render(request, 'vacancies/index.html', context=context)
 
@@ -28,7 +28,7 @@ class SpecVacanciesView(View):
         context = {
             'specialty': specialty,
             'count_vacancies_by_specialty': count_vacancies_by_specialty,
-            'specialties': specialties
+            'specialties': specialties,
         }
         return render(request, 'vacancies/vacancies.html', context=context)
 

@@ -1,17 +1,17 @@
 import os
 import django
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'stepik_vacancies.settings'
-django.setup()
-
 from stepik_vacancies.data import jobs, companies, specialties
 from vacancies.models import Vacancy, Company, Specialty
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'stepik_vacancies.settings'
+django.setup()
 
 if __name__ == '__main__':
     for data_specialties in specialties:
         Specialty.objects.create(
             code=data_specialties.get('code'),
-            title=data_specialties.get('title')
+            title=data_specialties.get('title'),
         )
 
     for data_companies in companies:
