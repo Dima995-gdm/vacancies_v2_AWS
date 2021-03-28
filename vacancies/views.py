@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404
 from django.views import View
@@ -7,8 +8,8 @@ from vacancies.models import Company, Specialty, Vacancy
 
 class MainView(View):
     def get(self, request):
-        specialties = Specialty.objects.all()
-        companies = Company.objects.all()
+        specialties = Specialty.objects.annotate(Count('vacancies'))
+        companies = Company.objects.annotate(Count('vacancies'))
         context = {
             'specialties': specialties,
             'companies': companies,
