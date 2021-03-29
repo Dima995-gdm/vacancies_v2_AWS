@@ -26,22 +26,22 @@ class ListVacanciesView(View):
 class SpecVacanciesView(View):
     def get(self, request, specialty):
         specialties = get_object_or_404(Specialty, code=specialty)
-        count_vacancies_by_specialty = Vacancy.objects.filter(specialty__code=specialty).count()
+        vacancies_by_specialty = Vacancy.objects.filter(specialty__code=specialty)
         context = {
             'specialty': specialty,
-            'count_vacancies_by_specialty': count_vacancies_by_specialty,
             'specialties': specialties,
+            'vacancies_by_specialty': vacancies_by_specialty,
         }
         return render(request, 'vacancies/vacancies.html', context=context)
 
 
 class CardCompanyView(View):
     def get(self, request, company):
-        vacancies_by_company = get_object_or_404(Vacancy, company=company)
-        count_vacancies = Vacancy.objects.filter(company=company).count()
+        data_company = get_object_or_404(Company, id=company)
+        vacancies_by_company = Vacancy.objects.filter(company=company)
         context = {
             'vacancies_by_company': vacancies_by_company,
-            'count_vacancies': count_vacancies,
+            'data_company': data_company,
         }
         return render(request, 'vacancies/company.html', context=context)
 
