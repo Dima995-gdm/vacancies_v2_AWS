@@ -57,4 +57,4 @@ def custom_handler404(request, exception):
 
 
 def custom_handler500(request):
-    return HttpResponseServerError('Сервер не досупен!')
+    return HttpResponseServerError('Сервер не доступен!')
