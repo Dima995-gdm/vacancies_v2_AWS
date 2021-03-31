@@ -1,5 +1,7 @@
 {% extends 'vacancies/base.html' %}
 
+{% load ru_pluralize %}
+
 {% block title %}Вакансии | Джуманджи{% endblock %}
 
 
@@ -8,7 +10,7 @@
     <section>
     {% if specialty in specialties.code %}
       <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>{{ specialties.title }}</strong></h1>
-      <p class="text-center pt-1">{{ specialties.vacancies.count }} вакансий</p>
+      <p class="text-center pt-1">{{ specialties.vacancies.count|ru_pluralize:'вакансия,вакансии,вакансий' }} </p>
     {% for vacancy in vacancies_by_specialty %}
             <div class="col-12 col-lg-8 offset-lg-2 m-auto">
                 <div class="card mb-4">
