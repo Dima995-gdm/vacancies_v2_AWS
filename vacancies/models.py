@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from phonenumber_field import modelfields
 
 from stepik_vacancies.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 
@@ -40,8 +41,8 @@ class Specialty(models.Model):
 
 
 class Application(models.Model):
-    written_username = models.CharField(max_length=100)
-    written_phone = models.CharField(max_length=20)
+    written_username = models.CharField(max_length=100, unique=True)
+    written_phone = modelfields.PhoneNumberField(unique=True)
     written_cover_letter = models.TextField()
     vacancy = models.ForeignKey(Vacancy, related_name='applications', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='applications', on_delete=models.CASCADE)

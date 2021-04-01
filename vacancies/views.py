@@ -2,6 +2,7 @@ from django.db.models import Count
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+from django.views.generic import CreateView
 
 from vacancies.models import Company, Specialty, Vacancy
 
@@ -46,10 +47,81 @@ class CardCompanyView(View):
         return render(request, 'vacancies/company.html', context=context)
 
 
-class ThisVacancy(View):
+class ThisVacancyView(View):
     def get(self, request, vacancy):
         this_vacancy = get_object_or_404(Vacancy, id=vacancy)
         return render(request, 'vacancies/vacancy.html', {'this_vacancy': this_vacancy})
+
+
+
+
+class SendRequestVacancy(View):
+    """ Отправка заявки """
+    def get(self, request, vacancy):
+        send_request_vacancy = get_object_or_404(Vacancy, id=vacancy)
+        return render(request, 'vacancies/sent.html', {'send_request_vacancy': send_request_vacancy})
+
+
+class CreateCompanyLetsStartView(View):
+    """ Предложение создать компанию """
+    def get(self, request):
+
+        return render(request, 'vacancies/company-create.html')
+
+
+class CreateCompanyView(View):
+    """ Форма создания компании """
+    def get(self, request):
+        return render(request, 'vacancies/company-create.html')
+
+
+class EditCompanyView(View):
+    """ Редактирование компании """
+    def get(self, request):
+
+        return render(request, 'vacancies/company-edit.html')
+
+
+class ListVacanciesCompanyView(View):
+    """ Список вакансий у конкретной компании """
+    def get(self, request):
+
+        return render(request, 'vacancies/vacancy-list.html')
+
+
+class CreateVacancyCompanyView(View):
+    """ Создание вакансии у конкретной компании """
+    def get(self, request):
+
+        return render(request, 'vacancies/vacancy-edit.html')
+
+
+
+class EditVacancyCompanyView(View):
+    """ Редактирование вакансии у конкретной компании """
+    def get(self, request):
+
+        return render(request, 'vacancies/vacancy-edit.html')
+
+
+class UserLoginView(View):
+    """ Вход пользователя """
+    def get(self, request):
+        return render(request, 'vacancies/login.html')
+
+
+class UserRegisterView(View):
+    """ Регистрация пользователя """
+    def get(self, request):
+        return render(request, 'vacancies/register.html')
+
+
+
+class UserLogoutView(View):
+    """ Выход пользователя """
+    def get(self, request):
+        return render(request, 'vacancies/vacancy-edit.html')
+
 
 
 def custom_handler404(request, exception):
