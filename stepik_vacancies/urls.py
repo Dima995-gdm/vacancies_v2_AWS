@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from vacancies import views
+from accounts import views as accounts_views
+
 
 
 urlpatterns = [
@@ -21,9 +23,9 @@ urlpatterns = [
     path('mycompany/vacancies/', views.ListVacanciesCompanyView.as_view(), name='list_vacancies_company'),
     path('mycompany/vacancies/create/', views.CreateVacancyCompanyView.as_view(), name='create_vacancy_company'),
     path('mycompany/vacancies/<int:vacancy>/', views.EditVacancyCompanyView.as_view(), name='edit_vacancy_company'),
-    path('login/', views.UserLoginView.as_view(), name='login_user'),
-    path('register/', views.UserRegisterView.as_view(), name='register_user'),
-    path('logout/', views.UserLogoutView.as_view(), name='logout_user'),
+    path('login/', accounts_views.UserLoginView.as_view(), name='login_user'),
+    path('register/', accounts_views.UserRegisterView.as_view(), name='register_user'),
+    path('logout/', accounts_views.UserLogoutView.as_view(), name='logout_user'),
 
 ]
 

@@ -1,8 +1,9 @@
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 from django.db.models import Count
 from django.http import HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
-from django.views.generic import CreateView
 
 from vacancies.models import Company, Specialty, Vacancy
 
@@ -14,7 +15,9 @@ class MainView(View):
         context = {
             'specialties': specialties,
             'companies': companies,
+            'request': request
         }
+
         return render(request, 'vacancies/index.html', context=context)
 
 
@@ -57,9 +60,9 @@ class ThisVacancyView(View):
 
 class SendRequestVacancy(View):
     """ Отправка заявки """
-    def get(self, request, vacancy):
-        send_request_vacancy = get_object_or_404(Vacancy, id=vacancy)
-        return render(request, 'vacancies/sent.html', {'send_request_vacancy': send_request_vacancy})
+    def get(self, request):
+
+        return render(request, 'vacancies/sent.html', {})
 
 
 class CreateCompanyLetsStartView(View):
@@ -79,7 +82,8 @@ class EditCompanyView(View):
     """ Редактирование компании """
     def get(self, request):
 
-        return render(request, 'vacancies/company-edit.html')
+
+        return render(request, 'vacancies/company-edit.html',{'request': request})
 
 
 class ListVacanciesCompanyView(View):
@@ -104,23 +108,7 @@ class EditVacancyCompanyView(View):
         return render(request, 'vacancies/vacancy-edit.html')
 
 
-class UserLoginView(View):
-    """ Вход пользователя """
-    def get(self, request):
-        return render(request, 'vacancies/login.html')
 
-
-class UserRegisterView(View):
-    """ Регистрация пользователя """
-    def get(self, request):
-        return render(request, 'vacancies/register.html')
-
-
-
-class UserLogoutView(View):
-    """ Выход пользователя """
-    def get(self, request):
-        return render(request, 'vacancies/vacancy-edit.html')
 
 
 

@@ -25,6 +25,7 @@
         <ul class="navbar-nav col-2 justify-content-end">
           <li class="nav-item active">
             <a href="{% url 'login_user' %}" class="nav-link font-weight-bold">Вход</a>
+              {{ request.user }}
           </li>
         </ul>
       </div>

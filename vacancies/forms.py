@@ -1,7 +1,16 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+
+from vacancies.models import Application
 
 
-class UserLoginForm(AuthenticationForm):
-    username = forms.CharField(label='Логин')
-    password = forms.CharField(label='Пароль')
+class ApplicationForm(forms.ModelForm):
+
+    class Meta:
+        model = Application
+        fields = ('written_username', 'written_phone', 'written_cover_letter')
+
+
+
+
+
+
