@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.http import request
+from django.urls import reverse
 from phonenumber_field import modelfields
 
 from stepik_vacancies.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
@@ -41,20 +43,17 @@ class Specialty(models.Model):
 
 
 class Application(models.Model):
-    written_username = models.CharField(max_length=100, unique=True)
-    written_phone = modelfields.PhoneNumberField(unique=True)
-    written_cover_letter = models.TextField()
+    written_username = models.CharField(max_length=100, verbose_name='Имя')
+    written_phone = modelfields.PhoneNumberField(region='RU', unique=True, verbose_name='Телефон')
+    written_cover_letter = models.TextField(verbose_name='Сопроводительное письмо')
     vacancy = models.ForeignKey(Vacancy, related_name='applications', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='applications', on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('vacancy', kwargs={'vacancy': self.vacancy})
+
     def __str__(self):
         return f'{self.pk} {self.written_username}'
-
-
-
-
-
-
 
 
 

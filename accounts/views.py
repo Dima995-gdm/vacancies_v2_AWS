@@ -26,4 +26,4 @@ class UserRegisterView(CreateView):
 
 class UserLogoutView(LogoutView):
     """ Выход пользователя """
-    next_page =reverse_lazy('home')
+    next_page = reverse_lazy('home')

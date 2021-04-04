@@ -24,8 +24,13 @@
         </ul>
         <ul class="navbar-nav col-2 justify-content-end">
           <li class="nav-item active">
+              {% if request.user.is_authenticated == True %}
+              <a href="" class="nav-link font-weight-bold">{{ request.user.get_full_name }}</a>
+              <a href="{% url 'logout_user' %}" class="nav-link font-weight-bold">Выход</a>
+              {% else %}
             <a href="{% url 'login_user' %}" class="nav-link font-weight-bold">Вход</a>
               {{ request.user }}
+              {% endif %}
           </li>
         </ul>
       </div>
