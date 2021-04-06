@@ -1,4 +1,6 @@
 {% extends 'vacancies/base_my_company.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 
 {% block title %}Вакансии компании | Джуманджи{% endblock %}
@@ -11,8 +13,8 @@
         <aside class="pt-3 pb-4 px-4 mb-5 card">
           <h1 class="h4 pt-2 pb-2">Моя компания</h1>
           <div class="nav flex-column nav-pills">
-            <a class="nav-link" href="#">1. Информация о&nbsp;компании</a>
-            <a class="nav-link active" href="#">2. Вакансии</a>
+            <a class="nav-link" href="{% url 'edit_company' %}">1. Информация о&nbsp;компании</a>
+            <a class="nav-link active" href="{% url 'list_vacancies_company' %}">2. Вакансии</a>
           </div>
         </aside>
       </div>
@@ -23,56 +25,10 @@
             <section>
               <h2 class="h4 pt-2 pb-3">Backend Middle/Senior</h2>
               <p class="alert alert-info" role="alert">Вакансия обновлена</p>
-              <form action="/echo" enctype="multipart/form-data">
+              <form action="" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
                 <div class="row">
-                  <div class="col-12 col-md-6">
-                    <div class="form-group pb-2">
-                      <label class="mb-2 text-dark" for="vacancyTitle">Название вакансии</label>
-                      <input class="form-control" type="text" value="Staffing Smarter" id="vacancyTitle">
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="form-group pb-2">
-                      <label class="mb-2 text-dark" for="userSpecialization">Специализация</label>
-                      <select class="custom-select mr-sm-2" id="userSpecialization">
-                        <option selected>Backend разработка</option>
-                        <option value="1">Frontend разработка</option>
-                        <option value="2">Project manager</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    <div class="form-group pb-2">
-                      <label class="mb-2 text-dark" for="vacancySalaryMin">Зарплата от</label>
-                      <input class="form-control" type="text" value="90 000" id="vacancySalaryMin">
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="form-group pb-2">
-                      <label class="mb-2" for="vacancySalaryMax">Зарплата до</label>
-                      <input class="form-control" type="text" value="90 000" id="vacancySalaryMax">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group pb-2">
-                  <label class="mb-2 text-dark" for="vacancySkills">Требуемые навыки</label>
-                  <textarea class="form-control" rows="3" id="vacancySkills" style="color:#000;">Бэкенд • Средний (Middle) • PHP • PostgreSQL • MySQL • Node.js • Laravel • Symfony • Yii framework • Sails.js • Rabbitmq • Kafka</textarea>
-                </div>
-                <div class="form-group pb-2">
-                  <label class="mb-2 text-dark" for="vacancyDescription">Описание вакансии</label>
-                  <textarea class="form-control" rows="13" id="vacancyDescription" style="color:#000;">Финтех компания входит в международную группу  и занимается развитием факторингового бизнеса. В связи с расширением штата, мы хотим усилить нашу команду Backend-разработчиком, для работы над улучшением продуктов компании.
-
-Мы предлагаем:
-Оформление по ТК РФ
-ДМС со стоматологией
-Достойную зарплату, уровень которой можно обсудить по телефону с рекрутером
-Гибкое начало дня, отдельные дни удаленной работы обсуждаются
-Современный офис
-Демократичную корпоративную культуру
-Работу в команде по Scrum
-                  </textarea>
+                {{ form|crispy }}
                 </div>
                 <div class="form-group">
                   <input type="submit" class="btn btn-info" value="Сохранить">

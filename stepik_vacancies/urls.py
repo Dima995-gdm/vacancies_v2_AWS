@@ -17,8 +17,8 @@ urlpatterns = [
     path('vacancies/<int:vacancy>/', views.ThisVacancyView.as_view(), name='vacancy'),
 
     path('vacancies/<int:vacancy>/send/', views.SendRequestVacancy.as_view(), name='send_request_vacancy'),
-    path('/mycompany/letsstart/', views.CreateCompanyLetsStartView.as_view(), name='create_company_lets_start'),
-    path('/mycompany/create/', views.CreateCompanyView.as_view(), name='create_company'),
+    path('mycompany/letsstart/', views.CreateCompanyLetsStartView.as_view(), name='create_company_lets_start'),
+    path('mycompany/create/', views.CreateCompanyView.as_view(), name='create_company'),
     path('mycompany/', views.EditCompanyView.as_view(), name='edit_company'),
     path('mycompany/vacancies/', views.ListVacanciesCompanyView.as_view(), name='list_vacancies_company'),
     path('mycompany/vacancies/create/', views.CreateVacancyCompanyView.as_view(), name='create_vacancy_company'),

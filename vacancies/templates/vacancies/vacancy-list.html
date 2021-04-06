@@ -10,8 +10,8 @@
         <aside class="pt-3 pb-4 px-4 mb-5 card">
           <h1 class="h4 pt-2 pb-2">Моя компания</h1>
           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link" href="#">1. Информация о&nbsp;компании</a>
-            <a class="nav-link active" href="#">2. Вакансии</a>
+            <a class="nav-link" href="{% url 'edit_company' %}">1. Информация о&nbsp;компании</a>
+            <a class="nav-link active" href="{% url 'list_vacancies_company' %}">2. Вакансии</a>
           </div>
         </aside>
       </div>
@@ -21,40 +21,29 @@
             <section class="tab-pane fade show active">
               <h2 class="h4 pt-2 pb-3">Вакансии</h2>
               <!-- vacancy state 1 -->
+            {% for vacancy in vacancies_by_company %}
               <div class="card mt-3">
                 <div class="card-body px-4">
                   <div class="row align-items-center">
                     <div class="col-6 col-lg-8">
-                      <a href="#" class="mb-1">Backend-разработчик</a>
+                      <a href="{% url 'vacancy' vacancy.id %}" class="mb-1">{{ vacancy.title }}</a>
                       <p class="mb-1">
-                        <span class="mr-4">120  000</span><a href="#" class="text-info">3 отклика</a>
+                        <span class="mr-4">{{ vacancy.salary_max }}</span><a href="#" class="text-info">3 отклика</a>
                       </p>
                     </div>
                     <div class="col-6 col-lg-4 text-right">
-                      <a href="#" class="btn btn-outline-info">Изменить</a>
+                      <a href="{% url 'edit_vacancy_company' vacancy.pk %}" class="btn btn-outline-info">Изменить</a>
                     </div>
                   </div>
+
                 </div>
+
               </div>
-              <!-- END vacancy state 1 -->
-              <!-- vacancy state 2 -->
-              <div class="card mt-3">
-                <div class="card-body px-4">
-                  <div class="row align-items-center">
-                    <div class="col-6 col-lg-8">
-                      <a href="#" class="mb-1">Backend-разработчик</a>
-                      <p class="mb-1">
-                        <span class="mr-4">90  000</span><span class="text-muted">Нет откликов</span>
-                      </p>
-                    </div>
-                    <div class="col-6 col-lg-4 text-right">
-                      <a href="#" class="btn btn-outline-info">Изменить</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- END vacancy state 2 -->
+            {% endfor %}
             </section>
+            <div class="mt-4 text-left">
+                <a href="{% url 'create_vacancy_company' %}" class="btn btn-info">Добавить вакансию</a>
+            </div>
           </div>
         </div>
       </div>
