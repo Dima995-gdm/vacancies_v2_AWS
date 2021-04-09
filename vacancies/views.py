@@ -1,6 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
@@ -114,21 +115,23 @@ class CreateCompanyView(View):
             company = form.save(commit=False)
             company.owner = request.user
             company.save()
+            messages.success(request, 'Кампания успешно создана!')
             return redirect('edit_company')
+        messages.error(request, 'Вы ввели неверные данные!')
         return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
-class EditCompanyView(UpdateView):
+class EditCompanyView(SuccessMessageMixin, UpdateView):
     """ Редактирование компании """
 
     model = Company
     template_name = 'vacancies/company-edit.html'
     form_class = CompanyForm
     success_url = reverse_lazy('edit_company')
+    success_message = 'Информация о компании обновлена!'
 
     def get_object(self, queryset=None):
         return self.request.user.owner_of_company
-
 
 
 class ListVacanciesCompanyView(View):
@@ -139,9 +142,9 @@ class ListVacanciesCompanyView(View):
         return render(request, 'vacancies/vacancy-list.html', {'vacancies_by_company': vacancies_by_company})
 
 
-
 class CreateVacancyCompanyView(View):
     """ Создание вакансии у конкретной компании """
+
     def get(self, request):
         return render(request, 'vacancies/vacancy-edit.html', {'form': VacancyForm})
 
@@ -151,40 +154,41 @@ class CreateVacancyCompanyView(View):
             vacancy = form.save(commit=False)
             vacancy.company_id = Company.objects.get(owner_id=self.request.user).pk
             vacancy.save()
-            return redirect('edit_company')
+            return redirect('list_vacancies_company')
+        messages.error(request, 'Вы ввели неверные данные!')
         return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
-
-
-
-
-
-class EditVacancyCompanyView(UpdateView):
+class EditVacancyCompanyView(SuccessMessageMixin, UpdateView):
     """ Редактирование вакансии у конкретной компании """
 
     model = Vacancy
     template_name = 'vacancies/vacancy-edit.html'
     form_class = VacancyForm
     pk_url_kwarg = 'vacancy'
-    #success_url = reverse_lazy('edit_vacancy_company')
+    success_message = 'Вакансия успешно обновлена!'
+
+    def get_context_data(self, **kwargs):
+        context = super(EditVacancyCompanyView, self).get_context_data(**kwargs)
+        context['applications'] = Application.objects.filter(vacancy=self.object)
+        return context
 
 
 
-
-   #def get(self, request, vacancy):
-   #    return render(request, 'vacancies/vacancy-edit.html', {'form': VacancyForm})
-
-   #def post(self, request):
-   #    form = VacancyForm(request.POST)
-   #    if form.is_valid():
-   #        vacancy = form.save(commit=False)
-   #        vacancy.company_id = Company.objects.get(owner_id=self.request.user).pk
-   #        vacancy.save()
-   #        return redirect('list_vacancies_company')
-   #    return render(request, 'vacancies/vacancy.html', {'form': form})
+    # success_url = reverse_lazy('edit_vacancy_company')
 
 
+# def get(self, request, vacancy):
+#    return render(request, 'vacancies/vacancy-edit.html', {'form': VacancyForm})
+
+# def post(self, request):
+#    form = VacancyForm(request.POST)
+#    if form.is_valid():
+#        vacancy = form.save(commit=False)
+#        vacancy.company_id = Company.objects.get(owner_id=self.request.user).pk
+#        vacancy.save()
+#        return redirect('list_vacancies_company')
+#    return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
 def custom_handler404(request, exception):

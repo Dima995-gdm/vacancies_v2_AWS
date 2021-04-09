@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import request
 from django.urls import reverse
 from phonenumber_field import modelfields
+from django.utils.timezone import now
 
 from stepik_vacancies.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
 
@@ -19,7 +20,7 @@ class Vacancy(models.Model):
     description = models.TextField(verbose_name='Описание вакансии')
     salary_min = models.IntegerField(verbose_name='Зарплата от')
     salary_max = models.IntegerField(verbose_name='Зарплата до')
-    published_at = models.DateField(default=date.today())
+    published_at = models.DateField(default=now())
 
     def __str__(self):
         return f'{self.pk} {self.title}'
