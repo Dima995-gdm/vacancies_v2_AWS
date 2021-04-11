@@ -29,7 +29,7 @@
                       <a href="{% url 'vacancy' vacancy.id %}" class="mb-1">{{ vacancy.title }}</a>
                       <p class="mb-1">
                         <span class="mr-4">{{ vacancy.salary_max }}
-                        </span><a href="{% url 'vacancy' vacancy.id %}" class="text-info">
+                        </span><a href="{% url 'edit_vacancy_company' vacancy.pk %}" class="text-info">
                           {{ vacancy.applications.count|ru_pluralize:'отклик,отклика,откликов' }}</a>
                       </p>
                     </div>

@@ -1,12 +1,10 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 from vacancies import views
 from accounts import views as accounts_views
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +24,10 @@ urlpatterns = [
     path('login/', accounts_views.UserLoginView.as_view(), name='login_user'),
     path('register/', accounts_views.UserRegisterView.as_view(), name='register_user'),
     path('logout/', accounts_views.UserLogoutView.as_view(), name='logout_user'),
+    path('search/', views.SearchView.as_view(), name='search'),
+    path('myresume/letsstart/', views.CreateResumeLetsStartView.as_view(), name='create_resume_lets_start'),
+    path('myresume/create/', views.CreateResume.as_view(), name='create_resume'),
+    path('myresume/', views.EditResume.as_view(), name='edit_resume')
 
 ]
 
@@ -33,5 +35,13 @@ handler404 = views.custom_handler404
 handler500 = views.custom_handler500
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    import debug_toolbar
+    import mimetypes
+
+    mimetypes.add_type("application/javascript", ".js", True)
+
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

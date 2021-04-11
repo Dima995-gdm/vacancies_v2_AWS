@@ -32,8 +32,8 @@
     {% endfor %}
 
     {% else %}
-      <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>Поиск вакансий</strong></h1>
-      <p class="text-center pt-1">{{ vacancies.count }} вакансий</p>
+      <h1 class="h1 text-center mx-auto mt-4 pt-5" style="font-size: 70px;"><strong>Все вакансии</strong></h1>
+      <p class="text-center pt-1">{{ vacancies.count|ru_pluralize:'вакансия,вакансии,вакансий' }}</p>
     {% for vacancy in vacancies %}
             <div class="col-12 col-lg-8 offset-lg-2 m-auto">
                 <div class="card mb-4">

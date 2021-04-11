@@ -29,7 +29,6 @@
               <a href="{% url 'logout_user' %}" class="nav-link font-weight-bold">Выход</a>
               {% else %}
             <a href="{% url 'login_user' %}" class="nav-link font-weight-bold">Вход</a>
-              {{ request.user }}
               {% endif %}
           </li>
         </ul>
