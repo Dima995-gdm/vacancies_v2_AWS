@@ -30,7 +30,7 @@ class Company(models.Model):
     location = models.CharField(max_length=50, verbose_name='География')
     logo = models.ImageField(
         upload_to=MEDIA_COMPANY_IMAGE_DIR,
-        verbose_name='Логотип', blank=True, default='company_images/default.png'
+        verbose_name='Логотип', blank=True, default='company_images/default.png',
         )
     description = models.CharField(max_length=100, verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество человек в компании')

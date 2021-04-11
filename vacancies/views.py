@@ -19,7 +19,7 @@ class MainView(View):
         context = {
             'specialties': specialties,
             'companies': companies,
-            'request': request
+            'request': request,
         }
 
         return render(request, 'vacancies/index.html', context=context)
@@ -178,7 +178,7 @@ class SearchView(ListView):
 
     def get_queryset(self):
         return Vacancy.objects.filter(
-            Q(title__icontains=self.request.GET.get('s')) | Q(description__icontains=self.request.GET.get('s'))
+            Q(title__icontains=self.request.GET.get('s')) | Q(description__icontains=self.request.GET.get('s')),
         )
 
 
@@ -192,7 +192,7 @@ class CreateResumeLetsStartView(View):
         return render(request, 'vacancies/resume-create.html')
 
 
-class CreateResume(SuccessMessageMixin,View):
+class CreateResume(SuccessMessageMixin, View):
     """ Создание резюме """
 
     def get(self, request):

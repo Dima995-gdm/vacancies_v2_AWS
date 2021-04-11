@@ -18,4 +18,3 @@ class UserRegisterForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Логин')
     password = forms.CharField(label='Пароль')
-
