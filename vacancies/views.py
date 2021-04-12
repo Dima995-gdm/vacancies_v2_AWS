@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, Q
@@ -54,7 +55,8 @@ class CardCompanyView(View):
         return render(request, 'vacancies/company.html', context=context)
 
 
-class ThisVacancyView(View):
+class ThisVacancyView(LoginRequiredMixin, View):
+    login_url = 'login_user'
 
     def get(self, request, vacancy):
         this_vacancy = get_object_or_404(Vacancy, id=vacancy)
@@ -72,15 +74,17 @@ class ThisVacancyView(View):
         return render(request, 'vacancies/vacancy.html', {'form': form, 'this_vacancy': this_vacancy})
 
 
-class SendRequestVacancy(View):
+class SendRequestVacancy(LoginRequiredMixin, View):
     """ Отправка заявки """
+    login_url = 'login_user'
 
     def get(self, request, vacancy):
         return render(request, 'vacancies/sent.html', {'vacancy': vacancy})
 
 
-class CreateCompanyLetsStartView(View):
+class CreateCompanyLetsStartView(LoginRequiredMixin, View):
     """ Предложение создать компанию """
+    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Company.objects.values_list('owner_id', flat=True):
@@ -89,12 +93,13 @@ class CreateCompanyLetsStartView(View):
         return render(request, 'vacancies/company-create.html')
 
 
-class CreateCompanyView(View):
+class CreateCompanyView(LoginRequiredMixin, View):
     """ Форма создания компании """
+    login_url = 'login_user'
 
     def get(self, request):
-        if request.user.id not in Company.objects.values_list('owner_id', flat=True):
-            return redirect('create_company_lets_start')
+        if request.user.id in Company.objects.values_list('owner_id', flat=True):
+            return redirect('edit_company')
 
         return render(request, 'vacancies/company-edit.html', {'form': CompanyForm})
 
@@ -110,8 +115,9 @@ class CreateCompanyView(View):
         return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
-class EditCompanyView(SuccessMessageMixin, UpdateView):
+class EditCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование компании """
+    login_url = 'login_user'
 
     model = Company
     template_name = 'vacancies/company-edit.html'
@@ -131,16 +137,18 @@ class EditCompanyView(SuccessMessageMixin, UpdateView):
             return redirect('create_company_lets_start')
 
 
-class ListVacanciesCompanyView(View):
+class ListVacanciesCompanyView(LoginRequiredMixin, View):
     """ Список вакансий у конкретной компании """
+    login_url = 'login_user'
 
     def get(self, request):
         vacancies_by_company = Vacancy.objects.filter(company__owner_id=self.request.user)
         return render(request, 'vacancies/vacancy-list.html', {'vacancies_by_company': vacancies_by_company})
 
 
-class CreateVacancyCompanyView(View):
+class CreateVacancyCompanyView(LoginRequiredMixin, View):
     """ Создание вакансии у конкретной компании """
+    login_url = 'login_user'
 
     def get(self, request):
         return render(request, 'vacancies/vacancy-edit.html', {'form': VacancyForm})
@@ -156,8 +164,9 @@ class CreateVacancyCompanyView(View):
         return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
-class EditVacancyCompanyView(SuccessMessageMixin, UpdateView):
+class EditVacancyCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование вакансии у конкретной компании """
+    login_url = 'login_user'
 
     model = Vacancy
     template_name = 'vacancies/vacancy-edit.html'
@@ -171,8 +180,10 @@ class EditVacancyCompanyView(SuccessMessageMixin, UpdateView):
         return context
 
 
-class SearchView(ListView):
+class SearchView(LoginRequiredMixin, ListView):
     """ Поиск вакансии по названию или описанию """
+    login_url = 'login_user'
+
     template_name = 'vacancies/search.html'
     context_object_name = 'vacancies'
 
@@ -182,8 +193,9 @@ class SearchView(ListView):
         )
 
 
-class CreateResumeLetsStartView(View):
+class CreateResumeLetsStartView(LoginRequiredMixin, View):
     """ Предложение создать резюме """
+    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Resume.objects.values_list('user_id', flat=True):
@@ -192,12 +204,13 @@ class CreateResumeLetsStartView(View):
         return render(request, 'vacancies/resume-create.html')
 
 
-class CreateResume(SuccessMessageMixin, View):
+class CreateResume(LoginRequiredMixin, SuccessMessageMixin, View):
     """ Создание резюме """
+    login_url = 'login_user'
 
     def get(self, request):
-        if request.user.id not in Resume.objects.values_list('user_id', flat=True):
-            return redirect('create_resume_lets_start')
+        if request.user.id in Resume.objects.values_list('user_id', flat=True):
+            return redirect('edit_resume')
         return render(request, 'vacancies/resume-edit.html', {'form': ResumeForm})
 
     def post(self, request):
@@ -212,8 +225,9 @@ class CreateResume(SuccessMessageMixin, View):
         return render(request, 'vacancies/vacancy.html', {'form': form})
 
 
-class EditResume(SuccessMessageMixin, UpdateView):
+class EditResume(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование резюме """
+    login_url = 'login_user'
 
     model = Resume
     template_name = 'vacancies/resume-edit.html'
