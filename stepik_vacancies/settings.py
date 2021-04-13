@@ -121,8 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
+
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "mysite/static"),
+    os.path.join(BASE_DIR, "vacancies_v2/static"),
 ]
 
 AWS_ACCESS_KEY_ID = 'AKIAIT2Z5TDYPX3ARJBA'
@@ -138,7 +140,9 @@ AWS_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
-DEFAULT_FILE_STORAGE = 'mysite.storage_backends.MediaStorage'  # <-- here is where we reference it
+DEFAULT_FILE_STORAGE = 'vacancies_v2.storage_backends.MediaStorage'  # <-- here is where we reference it
+
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
