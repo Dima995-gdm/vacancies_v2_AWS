@@ -124,7 +124,7 @@ USE_TZ = True
 
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "vacancies_v2/static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 AWS_ACCESS_KEY_ID = 'AKIAIT2Z5TDYPX3ARJBA'
@@ -140,7 +140,7 @@ AWS_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
-DEFAULT_FILE_STORAGE = 'vacancies_v2.storage_backends.MediaStorage'  # <-- here is where we reference it
+DEFAULT_FILE_STORAGE = 'storage_backends.MediaStorage'  # <-- here is where we reference it
 
 
 
