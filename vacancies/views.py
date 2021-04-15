@@ -7,10 +7,10 @@ from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, ListView
+from django.views.generic import UpdateView, ListView, CreateView
 
 from vacancies.forms import ApplicationForm, CompanyForm, VacancyForm, ResumeForm
-from vacancies.models import Company, Specialty, Vacancy, Application, Resume
+from vacancies.models import Company, Specialty, Vacancy, Application, Resume, Document
 
 
 class MainView(View):
@@ -245,6 +245,18 @@ class EditResume(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
         except ObjectDoesNotExist:
             return redirect('create_resume_lets_start')
+
+
+class DocumentCreateView(CreateView):
+    model = Document
+    fields = ['upload', ]
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        documents = Document.objects.all()
+        context['documents'] = documents
+        return context
 
 
 def custom_handler404(request, exception):

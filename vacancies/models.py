@@ -1,3 +1,4 @@
+from stepik_vacancies.settings import DEFAULT_FILE_STORAGE
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -29,7 +30,7 @@ class Company(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название компании')
     location = models.CharField(max_length=50, verbose_name='География')
     logo = models.ImageField(
-        upload_to=MEDIA_COMPANY_IMAGE_DIR,
+        upload_to=DEFAULT_FILE_STORAGE,
         verbose_name='Логотип', blank=True, default='company_images/default.png',
         )
     description = models.CharField(max_length=100, verbose_name='Информация о компании')
@@ -87,3 +88,8 @@ class Resume(models.Model):
 
     def __str__(self):
         return f'{self.pk} {self.user}'
+
+
+class Document(models.Model):
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    upload = models.FileField()

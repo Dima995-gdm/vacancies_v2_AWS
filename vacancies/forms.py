@@ -18,12 +18,14 @@ class CompanyForm(forms.ModelForm):
 
 
 class VacancyForm(forms.ModelForm):
+
     class Meta:
         model = Vacancy
         fields = ('title', 'specialty', 'salary_min', 'salary_max', 'skills', 'description')
 
 
 class ResumeForm(forms.ModelForm):
+
     class Meta:
         model = Resume
         fields = ('name', 'surname', 'status', 'salary', 'specialty', 'grade', 'education', 'experience', 'portfolio')
