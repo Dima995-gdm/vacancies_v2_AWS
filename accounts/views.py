@@ -3,12 +3,10 @@ from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
 
 from accounts.forms import UserRegisterForm, UserLoginForm
-from vacancies.models import Company
 
 
 class UserLoginView(LoginView):
     """ Вход пользователя """
-    model = Company
     form_class = UserLoginForm
     template_name = 'accounts/login.html'
 

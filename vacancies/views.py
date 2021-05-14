@@ -56,7 +56,6 @@ class CardCompanyView(View):
 
 
 class ThisVacancyView(LoginRequiredMixin, View):
-    login_url = 'login_user'
 
     def get(self, request, vacancy):
         this_vacancy = get_object_or_404(Vacancy, id=vacancy)
@@ -76,7 +75,6 @@ class ThisVacancyView(LoginRequiredMixin, View):
 
 class SendRequestVacancy(LoginRequiredMixin, View):
     """ Отправка заявки """
-    login_url = 'login_user'
 
     def get(self, request, vacancy):
         return render(request, 'vacancies/sent.html', {'vacancy': vacancy})
@@ -84,7 +82,6 @@ class SendRequestVacancy(LoginRequiredMixin, View):
 
 class CreateCompanyLetsStartView(LoginRequiredMixin, View):
     """ Предложение создать компанию """
-    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Company.objects.values_list('owner_id', flat=True):
@@ -95,7 +92,6 @@ class CreateCompanyLetsStartView(LoginRequiredMixin, View):
 
 class CreateCompanyView(LoginRequiredMixin, View):
     """ Форма создания компании """
-    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Company.objects.values_list('owner_id', flat=True):
@@ -117,7 +113,6 @@ class CreateCompanyView(LoginRequiredMixin, View):
 
 class EditCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование компании """
-    login_url = 'login_user'
 
     model = Company
     template_name = 'vacancies/company-edit.html'
@@ -133,13 +128,12 @@ class EditCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             form = CompanyForm(instance=self.get_object())
             return render(request, 'vacancies/company-edit.html', {'form': form})
 
-        except ObjectDoesNotExist:
+        except Company.DoesNotExist:
             return redirect('create_company_lets_start')
 
 
 class ListVacanciesCompanyView(LoginRequiredMixin, View):
     """ Список вакансий у конкретной компании """
-    login_url = 'login_user'
 
     def get(self, request):
         vacancies_by_company = Vacancy.objects.filter(company__owner_id=self.request.user)
@@ -148,7 +142,6 @@ class ListVacanciesCompanyView(LoginRequiredMixin, View):
 
 class CreateVacancyCompanyView(LoginRequiredMixin, View):
     """ Создание вакансии у конкретной компании """
-    login_url = 'login_user'
 
     def get(self, request):
         return render(request, 'vacancies/vacancy-edit.html', {'form': VacancyForm})
@@ -166,7 +159,6 @@ class CreateVacancyCompanyView(LoginRequiredMixin, View):
 
 class EditVacancyCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование вакансии у конкретной компании """
-    login_url = 'login_user'
 
     model = Vacancy
     template_name = 'vacancies/vacancy-edit.html'
@@ -182,7 +174,6 @@ class EditVacancyCompanyView(LoginRequiredMixin, SuccessMessageMixin, UpdateView
 
 class SearchView(LoginRequiredMixin, ListView):
     """ Поиск вакансии по названию или описанию """
-    login_url = 'login_user'
 
     template_name = 'vacancies/search.html'
     context_object_name = 'vacancies'
@@ -195,7 +186,6 @@ class SearchView(LoginRequiredMixin, ListView):
 
 class CreateResumeLetsStartView(LoginRequiredMixin, View):
     """ Предложение создать резюме """
-    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Resume.objects.values_list('user_id', flat=True):
@@ -206,7 +196,6 @@ class CreateResumeLetsStartView(LoginRequiredMixin, View):
 
 class CreateResume(LoginRequiredMixin, SuccessMessageMixin, View):
     """ Создание резюме """
-    login_url = 'login_user'
 
     def get(self, request):
         if request.user.id in Resume.objects.values_list('user_id', flat=True):
@@ -227,7 +216,6 @@ class CreateResume(LoginRequiredMixin, SuccessMessageMixin, View):
 
 class EditResume(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """ Редактирование резюме """
-    login_url = 'login_user'
 
     model = Resume
     template_name = 'vacancies/resume-edit.html'
@@ -243,7 +231,7 @@ class EditResume(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             form = ResumeForm(instance=self.get_object())
             return render(request, 'vacancies/resume-edit.html', {'form': form})
 
-        except ObjectDoesNotExist:
+        except Resume.DoesNotExist:
             return redirect('create_resume_lets_start')
 
 
