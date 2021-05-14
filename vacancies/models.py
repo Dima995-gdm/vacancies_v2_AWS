@@ -5,7 +5,7 @@ from django.urls import reverse
 from phonenumber_field import modelfields
 from django.utils import timezone
 
-from stepik_vacancies.settings import MEDIA_COMPANY_IMAGE_DIR, MEDIA_SPECIALITY_IMAGE_DIR
+from stepik_vacancies.settings import MEDIA_SPECIALITY_IMAGE_DIR
 
 
 class Vacancy(models.Model):
@@ -32,7 +32,7 @@ class Company(models.Model):
     logo = models.ImageField(
         upload_to=DEFAULT_FILE_STORAGE,
         verbose_name='Логотип', blank=True, default='company_images/default.png',
-        )
+    )
     description = models.CharField(max_length=100, verbose_name='Информация о компании')
     employee_count = models.IntegerField(verbose_name='Количество человек в компании')
     owner = models.OneToOneField(User, on_delete=models.PROTECT, related_name='owner_of_company')
@@ -93,3 +93,6 @@ class Resume(models.Model):
 class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     upload = models.FileField()
+
+    def __str__(self):
+        return f'{self.pk} {self.upload}'

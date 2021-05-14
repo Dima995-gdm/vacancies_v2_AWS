@@ -21,6 +21,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='company',
             name='logo',
-            field=models.ImageField(blank=True, default='company_images/default.png', upload_to='storage_backends.MediaStorage', verbose_name='Логотип'),
+            field=models.ImageField(blank=True,
+                                    default='company_images/default.png',
+                                    upload_to='storage_backends.MediaStorage',
+                                    verbose_name='Логотип',
+                                    ),
         ),
     ]
