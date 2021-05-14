@@ -28,7 +28,6 @@ urlpatterns = [
     path('myresume/letsstart/', views.CreateResumeLetsStartView.as_view(), name='create_resume_lets_start'),
     path('myresume/create/', views.CreateResume.as_view(), name='create_resume'),
     path('myresume/', views.EditResume.as_view(), name='edit_resume'),
-    path('download_files/', views.DocumentCreateView.as_view(), name='download_files'),
 
 ]
 
